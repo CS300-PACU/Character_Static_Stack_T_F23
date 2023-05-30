@@ -7,25 +7,46 @@
 # Purpose:    
 #############################################################################
 
-#compiler=clang
-compiler=gcc
+# variables
+CFLAGS=-g -Wall
+VALGRIND_FLAGS=-v --leak-check=yes --track-origins=yes --leak-check=full --show-leak-kinds=all
+ENSCRIPT_FLAGS=-C -T 2 -p - -M Letter --color -fCourier8
+TARGETS=bin/stktester bin/stkdriver
 
-all: bin bin/main
+all: bin ${TARGETS}
 
 bin:
 	mkdir -p bin
 
-bin/main: bin bin/main.o
-	${compiler} -o bin/main -g -Wall bin/main.o
+bin/stktester: bin bin/stktester.o bin/stk.o
+	gcc -o bin/stktester ${CFLAGS} bin/stktester.o bin/stk.o
 
-bin/main.o: src/main.c
-	${compiler} -c -o bin/main.o -g -Wall src/main.c
+bin/stktester.o: src/stktester.c include/stk.h
+	gcc -c -o bin/stktester.o ${CFLAGS}  src/stktester.c
 
-valgrind: bin/main
-	valgrind -v --leak-check=yes --track-origins=yes --leak-check=full --show-leak-kinds=all bin/main
+bin/stkdriver: bin bin/stkdriver.o bin/stk.o
+	gcc -o bin/stkdriver ${CFLAGS}  bin/stkdriver.o bin/stk.o
+
+bin/stkdriver.o: src/stkdriver.c include/stk.h
+	gcc -c -o bin/stkdriver.o ${CFLAGS}  src/stkdriver.c
+
+bin/stk.o: src/stk.c include/stk.h
+	gcc -c -o bin/stk.o ${CFLAGS}  src/stk.c
+
+valgrind: bin/stkdriver
+	valgrind ${VALGRIND_FLAGS} bin/stkdriver
 
 printAll:
-	enscript -C -T 2 -p - -M Letter -Ec --color -fCourier8 src/main.c  | ps2pdf - bin/main.pdf
+	enscript ${ENSCRIPT_FLAGS} -Emakefile  Makefile  | ps2pdf - bin/Makefile.pdf
+	enscript ${ENSCRIPT_FLAGS} -Ec src/stk.c  | ps2pdf - bin/stk.pdf
+	enscript ${ENSCRIPT_FLAGS} -Ec src/stkdriver.c  | ps2pdf - bin/stkdriver.pdf
+	enscript ${ENSCRIPT_FLAGS} -Ec src/stktester.c  | ps2pdf - bin/stktester.pdf
+	pdfunite bin/stk.pdf bin/stkdriver.pdf bin/stktester.pdf bin/Makefile.pdf bin/${USER}_stk.pdf
+	@echo
+	@echo File produced: bin/${USER}_stk.pdf
+	@echo
+	@ls -l bin/${USER}_stk.pdf
+	@echo
 
 clean:
-	rm -f bin/main bin/*.o
+	rm -f ${TARGETS} bin/*.o bin/*.pdf
