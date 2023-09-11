@@ -22,6 +22,7 @@
       "cwd": "${workspaceFolder}",
       "preLaunchTask": "runMake", // THIS IS IMPORTANT
     },
+/*    
     {
       "name": "(lldb) Launch with args", // Change name
       "type": "lldb",
@@ -31,7 +32,7 @@
       "cwd": "${workspaceFolder}",
       "preLaunchTask": "runMake", // THIS IS IMPORTANT
     },
-/*    {
+    {
       "name": "(gdb) Launch with args", // Change name
       "type": "cppdbg",
       "request": "launch",
