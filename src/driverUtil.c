@@ -27,7 +27,7 @@
 
 	Returned:	 	none
 	****************************************************************************/
-void success (char* szStr) {
+static void success (char* szStr) {
 	printf ("SUCCESS: %s\n", szStr);
 }
 
@@ -40,7 +40,7 @@ void success (char* szStr) {
 
  Returned:	 	none
  ****************************************************************************/
-void failure (char* szStr) {
+static void failure (char* szStr) {
 	printf ("FAILURE: %s\n", szStr);
 }
 

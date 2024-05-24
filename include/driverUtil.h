@@ -11,10 +11,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define assert(cond, msg) \
-checkAssert(cond, msg, __FILE__, __LINE__)
+#define assert(cond, msg) checkAssert(cond, msg, __FILE__, __LINE__)
 
-extern void success (char * szStr);
-extern void failure (char * szStr);
 extern void checkAssert (bool bExpression, char* pszMsg, 
 char *szFile, int line);

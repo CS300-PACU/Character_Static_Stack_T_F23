@@ -24,28 +24,36 @@
  *************************************************************************/
 
 int main() {
+	const char TEST_CHAR = 'P';
+
 	Stack sTheStack;
 	char data;
 
 	puts("Program Start\n");
 
-	puts("SUCCESS TESTS:");
-
-	success("Loaded Error Messages");
-
 	stkCreate(&sTheStack);
-	success("Stack Created");
 
 	assert(stkSize(&sTheStack) == 0, "Stack size is 0");
 
 	stkTerminate(&sTheStack);
-	success("Stack Terminated");
 
-	stkPush(&sTheStack, 'C');
+	/*
+
+	stkCreate(&sTheStack);
+
+	stkPush(&sTheStack, TEST_CHAR);
+
+	assert(stkSize(&sTheStack) == 1, "Stack size is 1");
+	
+	assert(TEST_CHAR == *stkPeek(&sTheStack, &data) , "Stack top is TEST_CHAR");
 
 	stkPop(&sTheStack, &data);
+	assert(stkSize(&sTheStack) == 0, "Stack size is 0");
 
-	printf("Data: %c\n", data);
+	stkTerminate(&sTheStack);
+
+	*/
+
 
 	puts("\nProgram End");
 
