@@ -8,6 +8,7 @@
 #############################################################################
 
 # variables
+CC=clang
 CFLAGS=-g -Wall
 VALGRIND_FLAGS=-v --leak-check=yes --track-origins=yes --leak-check=full --show-leak-kinds=all
 ENSCRIPT_FLAGS=-C -T 2 -p - -M Letter --color -fCourier8
@@ -18,20 +19,24 @@ all: bin ${TARGETS}
 bin:
 	mkdir -p bin
 
-bin/stktester: bin bin/stktester.o bin/stk.o
-	gcc -o bin/stktester ${CFLAGS} bin/stktester.o bin/stk.o
+bin/stktester: bin bin/stktester.o bin/stk.o bin/driverUtil.o
+	${CC} -o bin/stktester ${CFLAGS} bin/stktester.o bin/stk.o bin/driverUtil.o -lm
+	# use -lm on the line above because driverUtil.o needs the log() function
 
-bin/stktester.o: src/stktester.c include/stk.h
-	gcc -c -o bin/stktester.o ${CFLAGS}  src/stktester.c
+bin/stktester.o: src/stktester.c include/stk.h include/driverUtil.h
+	${CC} -c -o bin/stktester.o ${CFLAGS}  src/stktester.c
 
 bin/stkdriver: bin bin/stkdriver.o bin/stk.o
-	gcc -o bin/stkdriver ${CFLAGS}  bin/stkdriver.o bin/stk.o
+	${CC} -o bin/stkdriver ${CFLAGS} bin/stkdriver.o bin/stk.o
 
 bin/stkdriver.o: src/stkdriver.c include/stk.h
-	gcc -c -o bin/stkdriver.o ${CFLAGS}  src/stkdriver.c
+	${CC} -c -o bin/stkdriver.o ${CFLAGS}  src/stkdriver.c
 
 bin/stk.o: src/stk.c include/stk.h
-	gcc -c -o bin/stk.o ${CFLAGS}  src/stk.c
+	${CC} -c -o bin/stk.o ${CFLAGS}  src/stk.c
+
+bin/driverUtil.o: src/driverUtil.c include/driverUtil.h
+	${CC} ${CFLAGS} -c -o bin/driverUtil.o src/driverUtil.c
 
 valgrind: bin/stkdriver
 	valgrind ${VALGRIND_FLAGS} bin/stkdriver
