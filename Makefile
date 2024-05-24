@@ -10,7 +10,8 @@
 # variables
 CC=clang
 CFLAGS=-g -Wall
-VALGRIND_FLAGS=-v --leak-check=yes --track-origins=yes --leak-check=full --show-leak-kinds=all
+VALGRIND_FLAGS=-v --leak-check=yes --track-origins=yes --leak-check=full \
+--show-leak-kinds=all
 ENSCRIPT_FLAGS=-C -T 2 -p - -M Letter --color -fCourier8
 TARGETS=bin/stktester bin/stkdriver
 
