@@ -34,7 +34,7 @@ extern void processError(const char* szFile, const int line);
 typedef struct Stack *StackPtr;
 typedef struct Stack
 {
-	char pData[STK_MAX_ELEMENTS];
+	char aData[STK_MAX_ELEMENTS];
 	int top;
 } Stack;
 
