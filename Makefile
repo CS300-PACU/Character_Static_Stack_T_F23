@@ -43,11 +43,10 @@ valgrind: bin/stkdriver
 	valgrind ${VALGRIND_FLAGS} bin/stkdriver
 
 printAll:
-	enscript ${ENSCRIPT_FLAGS} -Emakefile  Makefile  | ps2pdf - bin/Makefile.pdf
 	enscript ${ENSCRIPT_FLAGS} -Ec src/stk.c  | ps2pdf - bin/stk.pdf
 	enscript ${ENSCRIPT_FLAGS} -Ec src/stkdriver.c  | ps2pdf - bin/stkdriver.pdf
 	enscript ${ENSCRIPT_FLAGS} -Ec src/stktester.c  | ps2pdf - bin/stktester.pdf
-	pdfunite bin/stk.pdf bin/stkdriver.pdf bin/stktester.pdf bin/Makefile.pdf bin/${USER}_stk.pdf
+	pdfunite bin/stk.pdf bin/stkdriver.pdf bin/stktester.pdf bin/${USER}_stk.pdf
 	@echo
 	@echo File produced: bin/${USER}_stk.pdf
 	@echo
