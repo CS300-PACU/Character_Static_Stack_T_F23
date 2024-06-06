@@ -45,9 +45,9 @@ extern void stkCreate (StackPtr psStack);
 extern void stkTerminate (StackPtr psStack);
 extern bool stkIsFull (const StackPtr psStack);
 extern bool stkIsEmpty (const StackPtr psStack);
-extern void stkPush (StackPtr psStack, char data);
-extern char *stkPop (StackPtr psStack, char* data);
-extern char *stkPeek (const StackPtr psStack, char *data);
+extern bool stkPush (StackPtr psStack, char data);
+extern bool stkPop (StackPtr psStack, char* pData);
+extern bool stkPeek (const StackPtr psStack, char *pData);
 extern int stkSize (const StackPtr psStack);
 
 #endif /* STK_H_ */
